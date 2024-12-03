@@ -14,9 +14,9 @@
     <div class="header">
         <div class="left-header">
             <a href="index.html">
-                <img style="padding: .2rem; border: 2px solid var(--yellow); width: 80px; border-radius: 50%;" src="profile_picture.jpg" alt="">
+                <img style="padding: .2rem; border: 2px solid var(--white); width: 80px; border-radius: 50%;" src="profile_picture.jpg" alt="">
             </a>
-            <a href="changelog.html">changelog</a>
+            <a style="font-weight: 600;" href="changelog.html">changelog</a>
         </div>
         <div class="right-header">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -84,25 +84,6 @@
     </div>
 
     <script>
-        // Theme Toggle Logic
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme');
-
-        if (savedTheme) {
-            document.documentElement.classList.add(savedTheme);
-            themeToggle.classList.toggle('light', savedTheme === 'light-mode');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('light-mode');
-            themeToggle.classList.toggle('light');
-            
-            const currentTheme = document.documentElement.classList.contains('light-mode') 
-                ? 'light-mode' 
-                : '';
-            localStorage.setItem('theme', currentTheme);
-        });
-
         // Timeline Visibility Animation
         const timelineItems = document.querySelectorAll('.timeline-item');
         const observer = new IntersectionObserver((entries) => {
@@ -115,5 +96,6 @@
 
         timelineItems.forEach(item => observer.observe(item));
     </script>
+    <script src="script.js"></script>
 </body>
 </html>

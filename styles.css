@@ -213,11 +213,28 @@ body {
     border-radius: 50%;
     background-color: transparent;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: 
+        transform 0.3s ease, 
+        width 0.3s ease, 
+        margin 0.3s ease;
 }
 
-.social-icon:hover {
-    transform: scale(1.1);
+.social-menu:hover .social-icon {
+    transform: scale(0.9);
+    transition: 
+        transform 0.3s ease, 
+        width 0.3s ease, 
+        margin 0.3s ease;
+}
+
+.social-menu .social-icon:hover {
+    transform: scale(1.2);
+    z-index: 10;
+}
+
+.social-menu:hover .social-icon:not(:hover) {
+    transform: scale(0.8);
+    opacity: 0.7;
 }
 
 .hero {

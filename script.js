@@ -1,40 +1,41 @@
-const themeToggle = document.getElementById('themeToggle');
-    
+(function () {
+    const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     function setTheme(theme) {
         if (theme === 'light') {
             document.documentElement.classList.add('light-mode');
-            themeToggle.classList.add('light');
+            themeToggle?.classList.add('light');
             localStorage.setItem('theme', 'light');
         } else {
             document.documentElement.classList.remove('light-mode');
-            themeToggle.classList.remove('light');
+            themeToggle?.classList.remove('light');
             localStorage.setItem('theme', 'dark');
         }
     }
-    
-    // Initial theme setup
+
+    // Apply the saved theme or system preference on load
     if (savedTheme === 'light') {
         setTheme('light');
     } else if (savedTheme === 'dark') {
         setTheme('dark');
     } else {
-        // If no saved preference, use system preference
         setTheme(systemPrefersDark.matches ? 'dark' : 'light');
     }
-    
-    // Toggle theme when clicked
-    themeToggle.addEventListener('click', () => {
+
+    // Add event listener to the toggle button if it exists
+    themeToggle?.addEventListener('click', () => {
         const isCurrentlyDark = !document.documentElement.classList.contains('light-mode');
         setTheme(isCurrentlyDark ? 'light' : 'dark');
     });
-    
+
     // Listen for system theme changes
-    systemPrefersDark.addListener((e) => {
+    systemPrefersDark.addEventListener('change', (e) => {
         setTheme(e.matches ? 'dark' : 'light');
     });
+})();
+
 
 
     // Add this to your script.js file
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Extract the first few changelog entries
             const previewContent = tempDiv.querySelector('main') || tempDiv.querySelector('body');
-            return previewContent ? previewContent.innerHTML : 'No preview available';
+            return previewContent ? previewContent.innerHTML : 'My work timeline ✨';
         } catch (error) {
             return 'Unable to load changelog preview';
         }

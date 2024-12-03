@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form id="meuFormulario">
+        <label>
+            Seu nome:
+            <input type="name" name="name" required>
+        </label>
+        <label>
+            Seu e-mail:
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Sua mensagem:
+            <textarea name="message" required></textarea>
+        </label>
+        <button type="submit">Enviar</button>
+    </form>
+    <div id="mensagemSucesso" style="display: none; color: green; margin-top: 10px;">
+        Obrigado! Sua mensagem foi enviada com sucesso.
+    </div>
+    
+    <script>
+        const form = document.getElementById("meuFormulario");
+        const mensagemSucesso = document.getElementById("mensagemSucesso");
+    
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Evita o comportamento padrão do formulário
+    
+            // Enviar os dados via fetch para o Formspree
+            const formData = new FormData(form);
+            const response = await fetch("https://formspree.io/f/xdkoyqrn", {
+                method: "POST",
+                body: formData,
+                headers: { "Accept": "application/json" }
+            });
+    
+            if (response.ok) {
+                form.style.display = "none"; // Esconde o formulário
+                mensagemSucesso.style.display = "block"; // Exibe a mensagem de sucesso
+            } else {
+                alert("Houve um erro ao enviar sua mensagem. Tente novamente.");
+            }
+        });
+    </script>
+    
+</body>
+</html>
