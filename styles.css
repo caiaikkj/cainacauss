@@ -25,6 +25,9 @@
     --hue-4: #0d63f8;
     --hue-5: #0cdcf7;
     --hue-6: #4ff0b7;
+
+    --timeline-primary: var(--yellow);
+    --timeline-secondary: var(--hue-2);
 }
 
 :root.light-mode {
@@ -47,9 +50,16 @@
     --theme-toggle-circle: #333;
 }
 
+.white-text {
+    color: #f5f5f5;
+}
+
+.black-text {
+    color: #0f1115;
+}
+
 small {
     color: var(--hue-2);
-    
 }
 
 .theme-toggle {
@@ -158,7 +168,7 @@ body {
     text-decoration: none;
     background-color: var(--yellow);
     padding: .6rem 1.2rem;
-    color: var(--black);
+    color: #0f1115;
     font-weight: 600;
     border-radius: var(--border-radius-btn);
     box-shadow: 8px 8px 0 black;
@@ -231,22 +241,24 @@ body {
     width: 160px;
     font-size: .8rem;
     visibility: hidden;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--dark-bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--white);
     text-align: center;
     padding: .6rem .8rem;
     border-radius: 5px;
     position: absolute;
     bottom: 200%; /* Move tooltip above */
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(50%);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     z-index: 1;
 }
 
 .tooltip:hover .tooltip-text {
     visibility: visible;
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
 
@@ -313,4 +325,196 @@ main .other h2  {
 /* LinkedIn Icon */
 .linkedin-icon svg {
     fill: #0A66C2;
+}
+
+
+
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 40px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 100%;
+    background: var(--dark-bg-color);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease;
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-item:nth-child(even) {
+    align-self: flex-end;
+    left: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+    align-self: flex-start;
+    left: 0;
+}
+
+.timeline-content {
+    background: var(--dark-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--timeline-primary);
+    top: 20px;
+}
+
+.timeline-item:nth-child(odd)::before {
+    right: -10px;
+}
+
+.timeline-item:nth-child(even)::before {
+    left: -10px;
+}
+
+.timeline-tag {
+    display: inline-block;
+    background: var(--timeline-secondary);
+    color: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+}
+
+.timeline-title {
+    color: var(--yellow);
+    margin-bottom: 10px;
+    font-family: var(--fancy-font-family);
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 80px;
+        padding-right: 20px;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+
+    .timeline-item::before {
+        left: 10px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row; /* Ensure horizontal layout */
+    }
+
+    .header .left-header,
+    .header .right-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .header .left-header img {
+        width: 50px !important;
+        margin-right: 0.5rem;
+    }
+
+    .header .right-header a {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .theme-toggle {
+        margin-right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0.75rem 1rem;
+    }
+
+    .header .left-header,
+    .header .right-header {
+        gap: 0.5rem;
+    }
+
+    .header .left-header img {
+        width: 40px;
+    }
+
+    .header .right-header a {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .theme-toggle {
+        margin-right: 0.5rem;
+    }
+}
+
+/* Add this to your styles.css */
+.changelog-preview {
+    position: absolute;
+    background-color: var(--dark-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    max-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    z-index: 1100;
+}
+
+.changelog-preview.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }

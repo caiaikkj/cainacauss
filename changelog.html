@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cainã Causs - Changelog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Parkinsans:wght@300..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="left-header">
+            <a href="index.html">
+                <img style="padding: .2rem; border: 2px solid var(--yellow); width: 80px; border-radius: 50%;" src="profile_picture.jpg" alt="">
+            </a>
+            <a href="changelog.html">changelog</a>
+        </div>
+        <div class="right-header">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <a href="#">get in touch</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-tag">Late 2024</span>
+                    <h3 class="timeline-title">NUDDIG Co-Founder</h3>
+                    <p>I participated in the founding of NUDDIG, a software and web application development startup</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-tag">2024</span>
+                    <h3 class="timeline-title">Web Developer at Amadomaker</h3>
+                    <p>Joined Amadomaker as a Front-End Developer, focusing on React Native and Node.js projects</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-tag">Late 2021 - 2023</span>
+                    <h3 class="timeline-title">Freelance Web Development</h3>
+                    <p>Worked on multiple freelance projects, building responsive web applications and custom solutions for clients</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-tag">2020 - 2021</span>
+                    <h3 class="timeline-title">Web Development</h3>
+                    <p>I started focusing my studies on HTML, CSS and JavaScript, aspiring to be a webdeveloper</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-tag">2019</span>
+                    <h3 class="timeline-title">Start of the Journey</h3>
+                    <p>Started studying C# and making some games with Unity</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.documentElement.classList.add(savedTheme);
+            themeToggle.classList.toggle('light', savedTheme === 'light-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('light-mode');
+            themeToggle.classList.toggle('light');
+            
+            const currentTheme = document.documentElement.classList.contains('light-mode') 
+                ? 'light-mode' 
+                : '';
+            localStorage.setItem('theme', currentTheme);
+        });
+
+        // Timeline Visibility Animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        timelineItems.forEach(item => observer.observe(item));
+    </script>
+</body>
+</html>
