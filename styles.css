@@ -28,6 +28,11 @@
 
     --timeline-primary: var(--yellow);
     --timeline-secondary: var(--hue-2);
+
+    ::selection {
+        background-color: var(--hue-2);
+        color: var(--black);
+    }
 }
 
 :root.light-mode {
@@ -247,10 +252,25 @@ body {
     justify-content: center;
 }
 
+.hero svg {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: .5;
+    margin-top: 4rem;
+    transition: 600ms ease all;
+}
+
+.hero svg:hover {
+    opacity: 1;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
-    cursor: pointer;
+    cursor: default;
 }
 
 .tooltip .tooltip-text {
@@ -351,7 +371,6 @@ main .other h2  {
     position: relative;
     max-width: 800px;
     margin: 100px auto;
-    padding: 40px 0;
 }
 
 .timeline::before {
@@ -437,6 +456,12 @@ main .other h2  {
 }
 
 @media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+    .hero p {
+        font-size: 1.2rem;
+    }
     .timeline::before {
         left: 30px;
     }
@@ -535,3 +560,98 @@ main .other h2  {
     visibility: visible;
     transform: translateY(0);
 }
+
+.project-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--dark-bg-color);
+    border-radius: 10px;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.project-scroll-container::before,
+.project-scroll-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to right, var(--dark-bg-color) 0%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+}
+
+.project-scroll-container::before {
+    left: 0;
+}
+
+.project-scroll-container::after {
+    right: 0;
+    transform: rotateZ(180deg);
+}
+
+.project-scroll-text {
+    padding: 1rem;
+    display: flex;
+    width: calc(250px * 14);
+    animation: scrollProjects 40s linear infinite alternate;
+}
+
+.project-scroll-text span {
+    flex: 0 0 250px;
+    padding-right: 2rem;
+    font-size: var(--p-size-variant);
+    color: var(--white);
+    white-space: nowrap;
+}
+
+@keyframes scrollProjects {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 7));
+    }
+}
+
+
+
+/* Pre-loader Styles */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.preloader-content svg {
+    animation: pulse 1.5s infinite;
+}
+
+.preloader.loaded {
+    opacity: 0;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+

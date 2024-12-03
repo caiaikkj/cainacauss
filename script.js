@@ -93,3 +93,56 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContainer.classList.remove('visible');
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Pre-loader logic
+    const preloader = document.querySelector('.preloader');
+    
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }, 1000);
+    });
+
+    // Hero SVG interaction
+    const heroSvg = document.getElementById('heroSvg');
+    let clickCount = 0;
+    const animations = [
+        { transform: 'scale(1.1) rotate(10deg)' },
+        { transform: 'scale(0.9) rotate(-10deg)' },
+        { transform: 'scale(1.2) rotate(15deg)' },
+        { transform: 'scale(0.8) rotate(-15deg)' },
+        { transform: 'rotate(360deg)' }
+    ];
+
+    heroSvg.addEventListener('click', () => {
+        const currentAnimation = animations[clickCount % animations.length];
+        
+        heroSvg.animate([
+            { transform: 'scale(1) rotate(0deg)' },
+            currentAnimation
+        ], {
+            duration: 300,
+            easing: 'ease-in-out',
+            fill: 'forwards'
+        });
+
+        // Optional: Reset to original state after a short delay
+        setTimeout(() => {
+            heroSvg.animate([
+                currentAnimation,
+                { transform: 'scale(1) rotate(0deg)' }
+            ], {
+                duration: 300,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            });
+        }, 500);
+
+        clickCount++;
+    });
+});

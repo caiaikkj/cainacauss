@@ -3,37 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Form</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg-color: rgba(0, 0, 0, 0.05);
+            --dark-bg-color: rgba(255, 255, 255, 0.05);
+            --border-color: #707070;
+            
+            --general-font-family: "Gabarito", sans-serif;
+            --border-radius-btn: .2rem;
+
+            --black: #0f1115;
+            --white: #f5f5f5;
+            --yellow: #fff312;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: var(--general-font-family);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .header .right-header a:hover {
+            box-shadow: 8px 8px 0 black !important;
+        }
+
+        .contact-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #meuFormulario {
+            background-color: var(--dark-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #meuFormulario label {
+            display: flex;
+            flex-direction: column;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        #meuFormulario input,
+        #meuFormulario textarea {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-btn);
+            color: var(--white);
+            transition: border-color 0.3s ease;
+        }
+
+        #meuFormulario input:focus,
+        #meuFormulario textarea:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        #meuFormulario button {
+            background-color: var(--yellow);
+            color: var(--black);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-btn);
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 8px 8px 0 black;
+            transition: 180ms ease all;
+        }
+
+        #meuFormulario button:hover {
+            box-shadow: 4px 4px 0 black;
+        }
+
+        #mensagemSucesso {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #mensagemSucesso.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .success-content {
+            text-align: center;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .success-content.animate {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .success-content svg {
+            width: 150px;
+            height: 150px;
+            fill: var(--yellow);
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .success-content h2 {
+            color: var(--yellow);
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 4px;
+            background-color: var(--yellow);
+            margin-top: 20px;
+            transition: width 3s linear;
+        }
+
+        .progress-bar.animate {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <form id="meuFormulario">
-        <label>
-            Seu nome:
-            <input type="name" name="name" required>
-        </label>
-        <label>
-            Seu e-mail:
-            <input type="email" name="email" required>
-        </label>
-        <label>
-            Sua mensagem:
-            <textarea name="message" required></textarea>
-        </label>
-        <button type="submit">Enviar</button>
-    </form>
-    <div id="mensagemSucesso" style="display: none; color: green; margin-top: 10px;">
-        Obrigado! Sua mensagem foi enviada com sucesso.
+    <div class="preloader">
+        <div class="preloader-content">
+            <svg width="100" height="100" viewBox="0 0 337 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M329 160C329 243.562 257.537 312 168.5 312C79.4631 312 8 243.562 8 160C8 76.4379 79.4631 8 168.5 8C257.537 8 329 76.4379 329 160ZM337 160C337 248.366 261.56 320 168.5 320C75.44 320 0 248.366 0 160C0 71.6344 75.44 0 168.5 0C261.56 0 337 71.6344 337 160ZM104 147C113.941 147 122 138.941 122 129C122 119.059 113.941 111 104 111C94.0589 111 86 119.059 86 129C86 138.941 94.0589 147 104 147ZM240 129C240 138.941 231.941 147 222 147C212.059 147 204 138.941 204 119.059 204 111 212.059 111 222 111C231.941 111 240 119.059 240 129ZM108.091 195.455C116.182 201 125.03 205.258 134.636 208.227C144.273 211.227 154.818 212.727 166.273 212.727C177.727 212.727 188.258 211.227 197.864 208.227C207.5 205.258 216.364 201 224.455 195.455V186C220.455 188.909 215.273 191.545 208.909 193.909C202.545 196.273 195.652 198.152 188.227 199.545C180.803 200.939 173.485 201.636 166.273 201.636C160.879 201.636 155.379 201.227 149.773 200.409C144.197 199.621 138.788 198.515 133.545 197.091C128.333 195.667 123.545 194 119.182 192.091C114.788 190.212 111.091 188.182 108.091 186V195.455Z" fill="var(--white)"/>
+            </svg>
+        </div>
+    </div>
+    <div class="contact-container">
+        <div class="header">
+            <div class="left-header">
+                <a href="/cainacauss">
+                    <img style="padding: .2rem; border: 2px solid var(--white); width: 80px; border-radius: 50%;" src="profile_picture.jpg" alt="">
+                </a>
+                <a style="font-weight: 100;" href="changelog">changelog</a>
+            </div>
+            <div class="right-header">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a style="box-shadow: 4px 4px 0 black;" href="contact">get in touch</a>
+            </div>
+        </div>
+        <form id="meuFormulario">
+            <label>
+                Seu nome:
+                <input type="name" name="name" required>
+            </label>
+            <label>
+                Seu e-mail:
+                <input type="email" name="email" required>
+            </label>
+            <label>
+                Sua mensagem:
+                <textarea name="message" required></textarea>
+            </label>
+            <button type="submit">Enviar</button>
+        </form>
+    
+        <div id="mensagemSucesso">
+            <div class="success-content">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <h2>Thank You!</h2>
+                <p>I've received your message.</p>
+                <div class="progress-bar"></div>
+            </div>
+        </div>
     </div>
     
     <script>
         const form = document.getElementById("meuFormulario");
         const mensagemSucesso = document.getElementById("mensagemSucesso");
+        const successContent = mensagemSucesso.querySelector('.success-content');
+        const progressBar = mensagemSucesso.querySelector('.progress-bar');
     
         form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Evita o comportamento padrão do formulário
+            event.preventDefault();
     
-            // Enviar os dados via fetch para o Formspree
             const formData = new FormData(form);
             const response = await fetch("https://formspree.io/f/xdkoyqrn", {
                 method: "POST",
@@ -42,13 +251,24 @@
             });
     
             if (response.ok) {
-                form.style.display = "none"; // Esconde o formulário
-                mensagemSucesso.style.display = "block"; // Exibe a mensagem de sucesso
+                form.style.display = "none";
+                mensagemSucesso.classList.add('show');
+                
+                // Trigger animations
+                setTimeout(() => {
+                    successContent.classList.add('animate');
+                    progressBar.classList.add('animate');
+                }, 50);
+
+                // Redirect after animation
+                setTimeout(() => {
+                    window.location.href = '/cainacauss';
+                }, 3500);
             } else {
                 alert("Houve um erro ao enviar sua mensagem. Tente novamente.");
             }
         });
     </script>
-    
+    <script src="script.js"></script>
 </body>
 </html>
